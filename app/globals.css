@@ -1,0 +1,4 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root{color-scheme:light} body{background:#f7f8f7;color:#17211b} textarea,input,select{outline:none}.slide-aspect{aspect-ratio:16/9}@media print{.no-print{display:none!important}.print-slide{break-after:page;box-shadow:none!important;margin:0!important;width:100%!important}.print-stack{display:block!important}}
