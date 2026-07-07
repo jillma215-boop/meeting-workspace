@@ -64,7 +64,7 @@ export default function MyWorldPage() {
             </div>
             <div className="flex justify-center lg:justify-end">
               <div className="relative grid h-52 w-52 place-items-center rounded-full bg-[#F8EFE1] md:h-60 md:w-60">
-                <Image src="/jill/jill-idle.png" alt="Digital Jill" width={180} height={180} priority className="h-40 w-40 object-contain drop-shadow-[0_18px_24px_rgba(30,43,34,0.10)] md:h-44 md:w-44" />
+                <Image src="/jill/jill-idle.png" alt="Digital Jill" width={234} height={234} priority className="h-52 w-52 object-contain drop-shadow-[0_18px_24px_rgba(30,43,34,0.10)] md:h-56 md:w-56" />
               </div>
             </div>
           </div>
