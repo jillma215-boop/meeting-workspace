@@ -4,7 +4,7 @@ const modules = [
   {
     title: 'Reports',
     items: ['Weekly Report', 'Monthly Report', 'Program Report'],
-    href: '/',
+    href: '/reports',
     active: true,
   },
   {
@@ -29,7 +29,7 @@ export default function RakumonPage() {
     <main className="min-h-screen bg-[#F7F4EE] px-5 py-8 text-rakumon-text md:px-8 md:py-10">
       <div className="mx-auto max-w-6xl">
         <nav className="flex flex-wrap gap-3 text-sm font-bold text-rakumon-green">
-          <Link href="/my-world" className="transition hover:text-rakumon-text">My World</Link>
+          <Link href="/" className="transition hover:text-rakumon-text">My World</Link>
           <span className="text-rakumon-caption">/</span>
           <Link href="/work" className="transition hover:text-rakumon-text">Work</Link>
         </nav>

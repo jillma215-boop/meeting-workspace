@@ -4,7 +4,7 @@ export default function WorkPage() {
   return (
     <main className="min-h-screen bg-[#F7F4EE] px-5 py-8 text-rakumon-text md:px-8 md:py-10">
       <div className="mx-auto max-w-6xl">
-        <Link href="/my-world" className="text-sm font-bold text-rakumon-green transition hover:text-rakumon-text">← My World</Link>
+        <Link href="/" className="text-sm font-bold text-rakumon-green transition hover:text-rakumon-text">← My World</Link>
         <header className="mt-7 rounded-[34px] border border-white/80 bg-white/70 p-8 shadow-premium md:p-10">
           <p className="font-outfit text-xs font-bold uppercase tracking-[0.32em] text-rakumon-green">Work</p>
           <h1 className="mt-4 font-outfit text-5xl font-bold tracking-tight">Work</h1>
