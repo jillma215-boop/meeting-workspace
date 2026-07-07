@@ -2,19 +2,21 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Report, createBlankReport, loadReports, saveReports } from '@/lib/report';
 import { Editor } from '@/components/Editor';
+import { MoriAssistant } from '@/components/MoriAssistant';
 
 const getGreeting = () => {
   const hour = new Date().getHours();
-  if (hour >= 5 && hour <= 10) return { title: 'おはようございます。', body: '今日も良い一日にしましょう。' };
-  if (hour >= 11 && hour <= 16) return { title: 'こんにちは。', body: '午後のうちに、今週の内容を整理しておきましょう。' };
-  if (hour >= 17 && hour <= 22) return { title: 'お疲れさまです。', body: '今日の振り返りを、少しずつまとめていきましょう。' };
-  return { title: '今日もお疲れさまでした。', body: '無理せず、必要なところだけ整えておきましょう。' };
+  if (hour >= 5 && hour <= 10) return 'おはようございます、Jillさん。';
+  if (hour >= 11 && hour <= 17) return 'こんにちは、Jillさん。';
+  return 'お疲れさまです、Jillさん。';
 };
+
+const MORI_DASHBOARD_MESSAGE = '今週のレポートも、\n少しずつ整えていきましょう。';
 
 export default function Home() {
   const [reports, setReports] = useState<Report[]>([]);
   const [active, setActive] = useState<string | null>(null);
-  const [greeting, setGreeting] = useState({ title: 'こんにちは。', body: '午後のうちに、今週の内容を整理しておきましょう。' });
+  const [greeting, setGreeting] = useState('こんにちは、Jillさん。');
   useEffect(() => { setReports(loadReports()); setGreeting(getGreeting()); }, []);
   const activeReport = useMemo(() => reports.find((r) => r.id === active), [reports, active]);
   const persist = (next: Report[]) => { setReports(next); saveReports(next); };
@@ -29,10 +31,12 @@ export default function Home() {
           <div className="pointer-events-none absolute right-[-8rem] top-[-8rem] h-80 w-80 rounded-full bg-rakumon-green/5 blur-3xl" />
           <div className="pointer-events-none absolute bottom-[-7rem] left-[18rem] h-64 w-64 rounded-full bg-rakumon-green/5 blur-3xl" />
           <div className="relative max-w-3xl">
-            <div className="mb-8 text-rakumon-body">
-              <p className="text-lg font-medium">{greeting.title}</p>
-              <p className="mt-1 text-sm text-rakumon-caption md:text-base">{greeting.body}</p>
-            </div>
+            <MoriAssistant
+              className="mb-8"
+              state="idle"
+              title={greeting}
+              message={MORI_DASHBOARD_MESSAGE}
+            />
             <p className="font-outfit text-sm font-semibold uppercase tracking-[0.35em] text-rakumon-green">Rakumon Edition</p>
             <h1 className="mt-3 font-outfit text-5xl font-bold tracking-tight text-rakumon-text md:text-[56px]">Meeting Workspace</h1>
             <p className="mt-5 text-2xl font-semibold text-rakumon-text">AIで、報告業務をもっとスマートに。</p>
