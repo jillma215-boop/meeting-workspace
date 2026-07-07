@@ -11,7 +11,7 @@ const getGreeting = () => {
   return 'お疲れさまです、Jillさん。';
 };
 
-const MORI_DASHBOARD_MESSAGE = '今週のレポートも、\n少しずつ整えていきましょう。';
+const MORI_DASHBOARD_MESSAGE = '今日も一歩ずつ、\nレポートを整理していきましょう。';
 
 const WEEKDAY_MESSAGES: Record<number, string> = {
   0: '必要なところだけ、ゆっくり確認しておきましょう。',
@@ -92,17 +92,17 @@ export default function Home() {
                 title={greeting}
                 message={MORI_DASHBOARD_MESSAGE}
               />
-              <p className="font-outfit text-sm font-semibold uppercase tracking-[0.35em] text-rakumon-green">Rakumon Edition</p>
-              <h1 className="mt-3 font-outfit text-5xl font-bold tracking-tight text-rakumon-text md:text-[56px]">Meeting Workspace</h1>
+              <p className="font-outfit text-sm font-semibold uppercase tracking-[0.35em] text-rakumon-green">Rakumon Workplace</p>
+              <h1 className="mt-3 font-outfit text-5xl font-bold tracking-tight text-rakumon-text md:text-[56px]">Report Workspace</h1>
               <p className="mt-5 text-2xl font-semibold text-rakumon-text">AIで、報告業務をもっとスマートに。</p>
-              <p className="mt-4 max-w-2xl text-base leading-8 text-rakumon-body">毎週の運営報告を、入力・保存・プレビューまで一つのワークスペースで管理します。</p>
-              <button onClick={create} className="btn btn-primary mt-9">＋ 新規週次レポート作成</button>
+              <p className="mt-4 max-w-2xl text-base leading-8 text-rakumon-body">週報・月報・プロジェクトレポートを、<br />ひとつのワークスペースで管理します。</p>
+              <button onClick={create} className="btn btn-primary mt-9">＋ 新規レポート作成</button>
             </div>
             <TodayWidget today={today} />
           </div>
         </section>
-        <div className="mb-5 flex items-end justify-between"><div><p className="font-outfit text-xs font-bold uppercase tracking-[.25em] text-rakumon-green">Recent Reports</p><h2 className="mt-2 font-outfit text-3xl font-bold">Recent Reports</h2></div></div>
-        {reports.length === 0 ? <div className="rounded-[20px] bg-white p-10 text-center shadow-premium"><h3 className="text-xl font-bold">まだレポートがありません</h3><p className="mt-2 text-rakumon-body">新規週次レポートを作成して開始しましょう</p></div> : <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">{reports.map((r) => <article key={r.id} className="rounded-[20px] bg-white p-6 shadow-premium transition duration-200 hover:-translate-y-1 hover:shadow-premiumHover"><div className="text-sm text-rakumon-caption">対象期間</div><div className="mt-1 font-number text-xl font-bold text-rakumon-text">{r.startDate} / {r.endDate}</div><span className={`mt-5 inline-flex rounded-full px-3 py-1 text-xs font-bold ${r.status === 'Completed' ? 'bg-rakumon-light text-rakumon-green' : 'bg-amber-50 text-amber-700'}`}>{r.status}</span><p className="mt-5 text-sm text-rakumon-body">Last updated<br /><span className="font-number text-rakumon-caption">{new Date(r.updatedAt).toLocaleString('ja-JP')}</span></p><div className="mt-6 flex gap-2"><button onClick={() => setActive(r.id)} className="btn btn-primary flex-1">Open</button><button onClick={() => del(r.id)} className="btn btn-danger">Delete</button></div></article>)}</div>}
+        <div className="mb-5 flex items-end justify-between"><div><p className="font-outfit text-xs font-bold uppercase tracking-[.25em] text-rakumon-green">Recent Reports</p><h2 className="mt-2 font-outfit text-3xl font-bold">Recent Reports</h2><p className="mt-2 text-sm text-rakumon-body">週報・月報・プロジェクトレポートをここから開けます。</p></div></div>
+        {reports.length === 0 ? <div className="rounded-[20px] bg-white p-10 text-center shadow-premium"><h3 className="text-xl font-bold">まだレポートがありません</h3><p className="mt-2 text-rakumon-body">新規レポートを作成して開始しましょう</p></div> : <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">{reports.map((r) => <article key={r.id} className="rounded-[20px] bg-white p-6 shadow-premium transition duration-200 hover:-translate-y-1 hover:shadow-premiumHover"><div className="text-sm text-rakumon-caption">対象期間</div><div className="mt-1 font-number text-xl font-bold text-rakumon-text">{r.startDate} / {r.endDate}</div><span className={`mt-5 inline-flex rounded-full px-3 py-1 text-xs font-bold ${r.status === 'Completed' ? 'bg-rakumon-light text-rakumon-green' : 'bg-amber-50 text-amber-700'}`}>{r.status}</span><p className="mt-5 text-sm text-rakumon-body">Last updated<br /><span className="font-number text-rakumon-caption">{new Date(r.updatedAt).toLocaleString('ja-JP')}</span></p><div className="mt-6 flex gap-2"><button onClick={() => setActive(r.id)} className="btn btn-primary flex-1">Open</button><button onClick={() => del(r.id)} className="btn btn-danger">Delete</button></div></article>)}</div>}
       </div>
     </main>
   );
