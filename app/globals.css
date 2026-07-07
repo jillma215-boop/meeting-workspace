@@ -44,11 +44,15 @@ textarea, input, select { outline: none; }
   height: 5.5rem;
   display: grid;
   place-items: center;
+  background: transparent;
+  border: 0;
 }
 .mori-assistant__image {
   width: 5.25rem;
   height: 5.25rem;
   object-fit: contain;
+  background: transparent;
+  border: 0;
   filter: drop-shadow(0 10px 18px rgba(30, 43, 34, .08));
 }
 .mori-assistant__message {
