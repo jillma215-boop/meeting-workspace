@@ -56,7 +56,7 @@ export default function MyWorldPage() {
           <div className="relative grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_16rem]">
             <div className="max-w-3xl">
               <p className="font-outfit text-xs font-bold uppercase tracking-[0.32em] text-rakumon-green">My World</p>
-              <h1 className="mt-4 font-outfit text-5xl font-bold tracking-tight md:text-6xl">Hello, Jill.</h1>
+              <h1 className="mt-4 font-outfit text-5xl font-bold tracking-tight md:text-6xl">Hello, Jill Ma～</h1>
               <p className="mt-5 text-2xl font-bold leading-relaxed">今日は、どの世界から始めますか？</p>
               <p className="mt-5 max-w-2xl whitespace-pre-line text-base leading-8 text-rakumon-body md:text-lg">
                 仕事、成長、健康、暮らし、創造、探索。{`\n`}あなたの毎日は、いくつもの世界からできています。
