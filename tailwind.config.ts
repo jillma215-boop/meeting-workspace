@@ -1,3 +1,40 @@
 import type { Config } from 'tailwindcss';
-const config: Config = { content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './lib/**/*.{ts,tsx}'], theme: { extend: { colors: { rakumon: { bg:'#F7F8F4', card:'#FFFFFF', green:'#3BAA6A', light:'#EAF7EF', border:'#E3E8E2', text:'#16211D', muted:'#5E6A63', danger:'#FDECEC', dangerText:'#B42318' } }, fontFamily: { outfit:['Outfit','ui-sans-serif'], zen:['Zen Kaku Gothic New','system-ui','sans-serif'], inter:['Inter','ui-sans-serif'] }, boxShadow: { premium:'0 8px 24px rgba(24,34,25,0.06)' } } }, plugins: [] };
+
+const config: Config = {
+  content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './lib/**/*.{ts,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        rakumon: {
+          bg: '#F7F4EE',
+          sidebar: '#FBFAF6',
+          card: '#FFFFFF',
+          green: '#3BAA6A',
+          greenHover: '#2E925A',
+          light: '#EDF8F2',
+          border: '#E5E9E4',
+          text: '#1E2B22',
+          body: '#5F695F',
+          caption: '#8B938B',
+          danger: '#FDECEC',
+          dangerText: '#D96C6C',
+          warning: '#F5C66A',
+          table: '#F6F7F4',
+          input: '#FAFAF8',
+        },
+      },
+      fontFamily: {
+        outfit: ['Outfit', 'ui-sans-serif'],
+        zen: ['Zen Kaku Gothic New', 'system-ui', 'sans-serif'],
+        inter: ['Inter', 'ui-sans-serif'],
+        number: ['Inter', 'ui-sans-serif'],
+      },
+      boxShadow: {
+        premium: '0 10px 30px rgba(0,0,0,0.04)',
+        premiumHover: '0 14px 36px rgba(0,0,0,0.07)',
+      },
+    },
+  },
+  plugins: [],
+};
 export default config;
