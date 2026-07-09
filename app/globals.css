@@ -103,3 +103,20 @@ textarea, input, select { outline: none; }
 @media (prefers-reduced-motion: reduce) {
   .mori-assistant__image { animation: none !important; }
 }
+
+.digital-jill {
+  background: transparent;
+  border: 0;
+  animation: digital-jill-breathe 3.5s ease-in-out infinite;
+  transition: transform 200ms ease;
+}
+.digital-jill:hover {
+  transform: scale(1.02);
+}
+@keyframes digital-jill-breathe {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .digital-jill { animation: none !important; }
+}
