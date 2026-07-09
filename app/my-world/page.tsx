@@ -53,7 +53,7 @@ export default function MyWorldPage() {
       <div className="mx-auto max-w-6xl">
         <section className="relative overflow-hidden rounded-[36px] border border-white/80 bg-white/70 px-6 py-9 shadow-premium md:px-10 lg:px-12">
           <div className="pointer-events-none absolute right-8 top-8 h-36 w-36 rounded-full bg-[#F1D8B6]/30 blur-3xl" />
-          <div className="relative grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_16rem]">
+          <div className="relative grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_22rem]">
             <div className="max-w-3xl">
               <p className="font-outfit text-xs font-bold uppercase tracking-[0.32em] text-rakumon-green">My World</p>
               <h1 className="mt-4 font-outfit text-5xl font-bold tracking-tight md:text-6xl">Hello, Jill Ma～</h1>
@@ -63,8 +63,15 @@ export default function MyWorldPage() {
               </p>
             </div>
             <div className="flex justify-center lg:justify-end">
-              <div className="relative grid h-52 w-52 place-items-center rounded-full bg-[#F8EFE1] md:h-60 md:w-60">
-                <Image src="/jill/jill-idle.png" alt="Digital Jill" width={234} height={234} priority className="h-52 w-52 object-contain drop-shadow-[0_18px_24px_rgba(30,43,34,0.10)] md:h-56 md:w-56" />
+              <div className="relative grid h-64 w-64 place-items-center rounded-full bg-[#F8EFE1] md:h-80 md:w-80">
+                <Image
+                  src="/jill/jill-idle.png"
+                  alt="Digital Jill"
+                  width={320}
+                  height={320}
+                  priority
+                  className="digital-jill h-60 w-60 object-contain drop-shadow-[0_22px_30px_rgba(30,43,34,0.12)] md:h-80 md:w-80"
+                />
               </div>
             </div>
           </div>
