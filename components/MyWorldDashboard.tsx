@@ -6,7 +6,8 @@ type WorldCardData = {
   title: string;
   japanese: string;
   icon: 'briefcase' | 'trending-up' | 'heart' | 'home' | 'pencil' | 'compass';
-  gradient: string;
+  background: string;
+  accent: string;
   description: string;
   subtext: string;
   action?: string;
@@ -19,7 +20,8 @@ const worlds: WorldCardData[] = [
     title: 'Work',
     japanese: '仕事',
     icon: 'briefcase',
-    gradient: 'from-[#FF8A5B] via-[#F15D45] to-[#D94332]',
+    background: 'linear-gradient(135deg, #FFF8F4 0%, #FDEBDD 100%)',
+    accent: '#D66A3A',
     description: '仕事を整え、前に進める。',
     subtext: 'Rakumon・HR & General Affairs',
     action: 'Open Work →',
@@ -29,7 +31,8 @@ const worlds: WorldCardData[] = [
     title: 'Growth',
     japanese: '成長',
     icon: 'trending-up',
-    gradient: 'from-[#89D879] via-[#4FBF72] to-[#2F965E]',
+    background: 'linear-gradient(135deg, #F5FCF6 0%, #E6F6EA 100%)',
+    accent: '#4F9E68',
     badge: 'Coming soon',
     description: '学び、振り返り、成長する。',
     subtext: 'Learning・Skills・Goals',
@@ -38,7 +41,8 @@ const worlds: WorldCardData[] = [
     title: 'Health',
     japanese: '健康',
     icon: 'heart',
-    gradient: 'from-[#7BC7FF] via-[#4CA7E8] to-[#2878D8]',
+    background: 'linear-gradient(135deg, #F5FAFF 0%, #EAF5FF 100%)',
+    accent: '#4F8FD6',
     badge: 'Coming soon',
     description: '自分を支える土台を整える。',
     subtext: 'Energy・Exercise・Body',
@@ -47,7 +51,8 @@ const worlds: WorldCardData[] = [
     title: 'Life',
     japanese: '暮らし',
     icon: 'home',
-    gradient: 'from-[#C7A6FF] via-[#9B7BE8] to-[#7053C7]',
+    background: 'linear-gradient(135deg, #FBF8FF 0%, #F0EAFD 100%)',
+    accent: '#8E74D9',
     badge: 'Coming soon',
     description: '大切な人と、日々を記録する。',
     subtext: 'Family・Home・Memories',
@@ -56,7 +61,8 @@ const worlds: WorldCardData[] = [
     title: 'Create',
     japanese: '創造',
     icon: 'pencil',
-    gradient: 'from-[#FFADD0] via-[#F779B5] to-[#DC4A8B]',
+    background: 'linear-gradient(135deg, #FFF8FB 0%, #FDECF4 100%)',
+    accent: '#D66A97',
     badge: 'Coming soon',
     description: 'アイデアを、かたちにする。',
     subtext: 'Ideas・Products・Writing',
@@ -65,7 +71,8 @@ const worlds: WorldCardData[] = [
     title: 'Explore',
     japanese: '探索',
     icon: 'compass',
-    gradient: 'from-[#79DDD3] via-[#39BDB6] to-[#168F8F]',
+    background: 'linear-gradient(135deg, #F5FCFB 0%, #E5F5F3 100%)',
+    accent: '#3C9F96',
     badge: 'Coming soon',
     description: '好奇心のまま、まだ知らない世界へ。',
     subtext: 'AI & Future・Travel・Inspiration',
@@ -123,21 +130,29 @@ function Hero() {
 
 function WorldCard({ world }: { world: WorldCardData }) {
   const isEnabled = Boolean(world.href);
+  const cardStyle = { background: world.background };
+  const accentLineStyle = {
+    background: `linear-gradient(90deg, ${world.accent}66 0%, ${world.accent} 50%, ${world.accent}66 100%)`,
+  };
   const card = (
-    <article className={`group flex min-h-[17rem] flex-col rounded-[28px] border border-rakumon-border bg-white p-6 shadow-[0_12px_36px_rgba(0,0,0,0.06)] transition duration-200 ease-out ${isEnabled ? 'hover:-translate-y-1 hover:shadow-[0_18px_46px_rgba(0,0,0,0.09)]' : 'cursor-not-allowed'}`}>
+    <article
+      className={`group relative flex min-h-[17rem] flex-col overflow-hidden rounded-[28px] border border-white/70 p-6 shadow-[0_12px_36px_rgba(30,43,34,0.06)] transition duration-200 ease-out ${isEnabled ? 'hover:-translate-y-1.5 hover:shadow-[0_20px_48px_rgba(30,43,34,0.10)]' : 'cursor-not-allowed'}`}
+      style={cardStyle}
+    >
+      <div className="absolute inset-x-0 top-0 h-1" style={accentLineStyle} />
       <div className="flex items-start justify-between gap-4">
-        <div className={`grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br ${world.gradient} text-white shadow-[0_12px_24px_rgba(30,43,34,0.12)]`}>
+        <div className="grid h-14 w-14 place-items-center rounded-2xl text-white shadow-[0_12px_24px_rgba(30,43,34,0.12)]" style={{ backgroundColor: world.accent }}>
           <WorldIcon name={world.icon} />
         </div>
-        {world.badge && <span className="rounded-full border border-rakumon-border bg-[#F7F4EE] px-3 py-1 font-inter text-xs font-bold text-rakumon-body">{world.badge}</span>}
+        {world.badge && <span className="rounded-full border border-white/70 bg-white/55 px-3 py-1 font-inter text-xs font-bold text-[#8B938B]">{world.badge}</span>}
       </div>
       <div className="mt-6">
-        <h2 className="font-outfit text-3xl font-extrabold tracking-tight text-rakumon-text">{world.title}</h2>
-        <p className="mt-1 font-zen text-sm font-bold text-rakumon-body">{world.japanese}</p>
+        <h2 className="font-outfit text-3xl font-extrabold tracking-tight text-[#1E2B22]">{world.title}</h2>
+        <p className="mt-1 font-zen text-sm font-bold text-[#5F695F]">{world.japanese}</p>
       </div>
-      <p className="mt-5 font-zen text-base leading-8 text-rakumon-body">{world.description}</p>
-      <p className="mt-auto pt-8 font-inter text-sm font-bold text-[#7A827A]">{world.subtext}</p>
-      {world.action && <span className="mt-5 inline-flex font-inter text-sm font-extrabold text-rakumon-text transition duration-200 group-hover:translate-x-1">{world.action}</span>}
+      <p className="mt-5 font-zen text-base leading-8 text-[#5F695F]">{world.description}</p>
+      <p className="mt-auto pt-8 font-inter text-sm font-bold text-[#8B938B]">{world.subtext}</p>
+      {world.action && <span className="mt-5 inline-flex font-inter text-sm font-extrabold transition duration-200 group-hover:translate-x-1" style={{ color: world.accent }}>{world.action}</span>}
     </article>
   );
 
