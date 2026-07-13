@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800;900&family=Noto+Serif+JP:wght@700;900&family=Outfit:wght@600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,9 +6,9 @@
 :root { color-scheme: light; }
 * { box-sizing: border-box; }
 body {
-  background: #F4F1EC;
-  color: #39443F;
-  font-family: 'Zen Kaku Gothic New', system-ui, sans-serif;
+  background: #F1EEE8;
+  color: #26332E;
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
 }
 textarea, input, select { outline: none; }
 .slide-aspect { aspect-ratio: 16 / 9; }
@@ -19,11 +19,11 @@ textarea, input, select { outline: none; }
   font-weight: 700;
   transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease, border-color 150ms ease, color 150ms ease;
 }
-.btn-primary { background: #8F9A88; color: #FCFAF7; box-shadow: 0 12px 24px rgba(57,68,63,.10); }
-.btn-primary:hover { background: #7E8A77; transform: translateY(-1px); }
-.btn-secondary { background: #FCFAF7; border: 1px solid #DDD8D1; color: #39443F; }
-.btn-secondary:hover { background: #EEF1EA; border-color: #A8B0A0; transform: translateY(-1px); }
-.btn-danger { background: #F4E9E6; color: #A87972; }
+.btn-primary { background: #6F8F7B; color: #FCFAF7; box-shadow: 0 12px 24px rgba(38,51,46,.12); }
+.btn-primary:hover { background: #52705F; transform: translateY(-1px); }
+.btn-secondary { background: #FCFAF7; border: 1px solid #D8D4CD; color: #26332E; }
+.btn-secondary:hover { background: #EDF2ED; border-color: #6F8F7B; transform: translateY(-1px); }
+.btn-danger { background: #F8EEEA; color: #9F5F4D; }
 .btn-danger:hover { transform: translateY(-1px); }
 @media print {
   .no-print { display: none !important; }
@@ -36,7 +36,7 @@ textarea, input, select { outline: none; }
   align-items: center;
   gap: 1rem;
   max-width: 34rem;
-  color: #39443F;
+  color: #26332E;
 }
 .mori-assistant__imageWrap {
   flex: 0 0 auto;
@@ -57,7 +57,7 @@ textarea, input, select { outline: none; }
 }
 .mori-assistant__message {
   min-width: 0;
-  border-left: 1px solid rgba(168, 176, 160, .42);
+  border-left: 1px solid rgba(111, 143, 123, .42);
   padding-left: 1rem;
 }
 .mori-assistant__title {
@@ -69,7 +69,7 @@ textarea, input, select { outline: none; }
 .mori-assistant__body {
   margin-top: .2rem;
   white-space: pre-line;
-  color: #667068;
+  color: #52605A;
   font-size: .9375rem;
   line-height: 1.8;
 }
