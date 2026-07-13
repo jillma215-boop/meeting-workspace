@@ -2,7 +2,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { Report, normalizeReport } from './report';
 
-export type SharedReport = Report & { shareId: string; isShared: true; sharedAt: string; deletedAt?: string | null };
+export type SharedReport = Report & { shareId: string; isShared: boolean; sharedAt: string; deletedAt?: string };
 
 const dataDir = path.join(process.cwd(), '.data');
 const dataFile = path.join(dataDir, 'shared-reports.json');
@@ -25,7 +25,7 @@ async function writeStore(store: Record<string, SharedReport>) {
 function normalizeSharedReport(raw: Partial<SharedReport>): SharedReport {
   const normalized = normalizeReport(raw);
   const shareId = raw.shareId || normalized.shareId || normalized.id;
-  return { ...normalized, shareId, isShared: true, sharedAt: raw.sharedAt || normalized.sharedAt || normalized.updatedAt, deletedAt: raw.deletedAt ?? null };
+  return { ...normalized, shareId, isShared: raw.isShared ?? true, sharedAt: raw.sharedAt || normalized.sharedAt || normalized.updatedAt, deletedAt: raw.deletedAt ?? undefined };
 }
 
 export async function upsertSharedReport(report: Report) {
@@ -40,7 +40,7 @@ export async function upsertSharedReport(report: Report) {
     sharedAt: previous?.sharedAt ?? now,
     updatedAt: now,
     version: (previous?.version ?? Math.max(report.version || 1, 0)) + 1,
-    deletedAt: null,
+    deletedAt: undefined,
   });
   store[shareId] = shared;
   await writeStore(store);
@@ -58,8 +58,8 @@ export async function stopSharingReport(shareId: string) {
   const store = await readStore();
   const report = store[shareId];
   if (!report) return null;
-  const stopped = { ...report, isShared: false as const };
-  store[shareId] = stopped as SharedReport;
+  const stopped = { ...report, isShared: false };
+  store[shareId] = stopped;
   await writeStore(store);
   return stopped;
 }
@@ -68,8 +68,8 @@ export async function deleteSharedReport(shareId: string) {
   const store = await readStore();
   const report = store[shareId];
   if (!report) return null;
-  const deleted = { ...report, isShared: false as const, deletedAt: new Date().toISOString() };
-  store[shareId] = deleted as SharedReport;
+  const deleted = { ...report, isShared: false, deletedAt: new Date().toISOString() };
+  store[shareId] = deleted;
   await writeStore(store);
   return deleted;
 }
