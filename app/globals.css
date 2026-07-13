@@ -6,8 +6,8 @@
 :root { color-scheme: light; }
 * { box-sizing: border-box; }
 body {
-  background: #F7F4EE;
-  color: #1E2B22;
+  background: #F4F1EC;
+  color: #39443F;
   font-family: 'Zen Kaku Gothic New', system-ui, sans-serif;
 }
 textarea, input, select { outline: none; }
@@ -19,11 +19,11 @@ textarea, input, select { outline: none; }
   font-weight: 700;
   transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease, border-color 150ms ease, color 150ms ease;
 }
-.btn-primary { background: #3BAA6A; color: white; box-shadow: 0 10px 22px rgba(59,170,106,.18); }
-.btn-primary:hover { background: #2E925A; transform: translateY(-1px); }
-.btn-secondary { background: white; border: 1px solid #3BAA6A; color: #3BAA6A; }
-.btn-secondary:hover { background: #EDF8F2; transform: translateY(-1px); }
-.btn-danger { background: #FDECEC; color: #D96C6C; }
+.btn-primary { background: #8F9A88; color: #FCFAF7; box-shadow: 0 12px 24px rgba(57,68,63,.10); }
+.btn-primary:hover { background: #7E8A77; transform: translateY(-1px); }
+.btn-secondary { background: #FCFAF7; border: 1px solid #DDD8D1; color: #39443F; }
+.btn-secondary:hover { background: #EEF1EA; border-color: #A8B0A0; transform: translateY(-1px); }
+.btn-danger { background: #F4E9E6; color: #A87972; }
 .btn-danger:hover { transform: translateY(-1px); }
 @media print {
   .no-print { display: none !important; }
@@ -36,7 +36,7 @@ textarea, input, select { outline: none; }
   align-items: center;
   gap: 1rem;
   max-width: 34rem;
-  color: #1E2B22;
+  color: #39443F;
 }
 .mori-assistant__imageWrap {
   flex: 0 0 auto;
@@ -57,7 +57,7 @@ textarea, input, select { outline: none; }
 }
 .mori-assistant__message {
   min-width: 0;
-  border-left: 1px solid rgba(59, 170, 106, .18);
+  border-left: 1px solid rgba(168, 176, 160, .42);
   padding-left: 1rem;
 }
 .mori-assistant__title {
@@ -69,7 +69,7 @@ textarea, input, select { outline: none; }
 .mori-assistant__body {
   margin-top: .2rem;
   white-space: pre-line;
-  color: #64736A;
+  color: #667068;
   font-size: .9375rem;
   line-height: 1.8;
 }
