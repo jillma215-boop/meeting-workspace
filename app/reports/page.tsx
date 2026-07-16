@@ -1,6 +1,8 @@
 'use client';
 import { useEffect, useMemo, useState } from 'react';
 import { Report, ReportType, createBlankReport, loadReports, saveReports } from '@/lib/report';
+import { MonthlyReport, createMonthlyReport, loadMonthlyReports, saveMonthlyReports } from '@/lib/monthlyReport';
+import { MonthlyReportEditor } from '@/components/MonthlyReportEditor';
 import { Editor } from '@/components/Editor';
 import { MoriAssistant } from '@/components/MoriAssistant';
 
@@ -24,15 +26,15 @@ const WEEKDAY_MESSAGES: Record<number, string> = {
 };
 
 const reportTypes: Array<{ type: ReportType; icon: string; title: string; description: string }> = [
-  { type: 'weekly', icon: '①', title: '週次レポート', description: '毎週の運営状況・KPI・課題を整理します。' },
-  { type: 'monthly', icon: '②', title: '月次レポート', description: '売上・KPI・前月比較・月次まとめを整理します。' },
-  { type: 'project', icon: '③', title: 'プロジェクトレポート', description: '案件やプロジェクトの進捗を整理します。' },
+  { type: 'weekly', icon: '①', title: '新規週次レポート作成', description: '週次運営報告を作成します。' },
+  { type: 'monthly', icon: '②', title: '新規月次レポート作成', description: '月次経営・運営報告を作成します。' },
+  { type: 'project', icon: '③', title: '新規プログラムレポート作成', description: 'プログラム別レポートを作成します。' },
 ];
 
 const reportTypeLabels: Record<ReportType, string> = {
   weekly: '週次',
   monthly: '月次',
-  project: 'Project',
+  project: 'Program',
 };
 
 const getWeekNumber = (date: Date) => {
@@ -130,17 +132,24 @@ function ComingSoon({ report, onBack }: { report: Report; onBack: () => void }) 
 
 export default function Home() {
   const [reports, setReports] = useState<Report[]>([]);
+  const [monthlyReports, setMonthlyReports] = useState<MonthlyReport[]>([]);
   const [active, setActive] = useState<string | null>(null);
+  const [activeMonthly, setActiveMonthly] = useState<string | null>(null);
   const [greeting, setGreeting] = useState('こんにちは、Jillさん。');
   const [today, setToday] = useState<TodayInfo | null>(null);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [selectedType, setSelectedType] = useState<ReportType>('weekly');
-  useEffect(() => { setReports(loadReports()); setGreeting(getGreeting()); setToday(getTodayInfo()); }, []);
+  useEffect(() => { setReports(loadReports()); setMonthlyReports(loadMonthlyReports()); setGreeting(getGreeting()); setToday(getTodayInfo()); }, []);
   const activeReport = useMemo(() => reports.find((r) => r.id === active), [reports, active]);
+  const activeMonthlyReport = useMemo(() => monthlyReports.find((r) => r.id === activeMonthly), [monthlyReports, activeMonthly]);
   const persist = (next: Report[]) => { setReports(next); saveReports(next); };
-  const create = () => { const r = createBlankReport(selectedType); persist([r, ...reports]); setIsCreateOpen(false); setActive(r.id); };
+  const persistMonthly = (next: MonthlyReport[]) => { setMonthlyReports(next); saveMonthlyReports(next); };
+  const create = () => { if (selectedType === 'monthly') { const r = createMonthlyReport(); persistMonthly([r, ...monthlyReports]); setIsCreateOpen(false); setActiveMonthly(r.id); return; } const r = createBlankReport(selectedType); persist([r, ...reports]); setIsCreateOpen(false); setActive(r.id); };
   const update = (r: Report) => persist(reports.map((x) => (x.id === r.id ? { ...r, version: Math.max(r.version ?? 1, x.version ?? 1) + 1, updatedAt: new Date().toISOString() } : x)));
+  const updateMonthly = (r: MonthlyReport) => persistMonthly(monthlyReports.map((x) => (x.id === r.id ? r : x)));
   const del = (id: string) => { if (confirm('このレポートを削除しますか？')) persist(reports.filter((r) => r.id !== id)); };
+  const delMonthly = (id: string) => { if (confirm('この月次レポートを削除しますか？')) persistMonthly(monthlyReports.filter((r) => r.id !== id)); };
+  if (activeMonthlyReport) return <MonthlyReportEditor report={activeMonthlyReport} onBack={() => setActiveMonthly(null)} onChange={updateMonthly} />;
   if (activeReport?.type === 'weekly') return <Editor report={activeReport} onBack={() => setActive(null)} onChange={update} />;
   if (activeReport) return <ComingSoon report={activeReport} onBack={() => setActive(null)} />;
   return (
@@ -156,14 +165,20 @@ export default function Home() {
               <p className="font-outfit text-sm font-semibold uppercase tracking-[0.35em] text-rakumon-green">Rakumon Workplace</p>
               <h1 className="mt-3 font-outfit text-5xl font-bold tracking-tight text-rakumon-text md:text-[56px]">Report Workspace</h1>
               <p className="mt-5 text-2xl font-semibold text-rakumon-text">AIで、報告業務をもっとスマートに。</p>
-              <p className="mt-4 max-w-2xl text-base leading-8 text-rakumon-body">週報・月報・プロジェクトレポートを、<br />ひとつのワークスペースで管理します。</p>
+              <p className="mt-4 max-w-2xl text-base leading-8 text-rakumon-body">週次運営報告・月次経営/運営報告・プログラム別レポートを、<br />ひとつのワークスペースで管理します。</p>
               <button onClick={() => setIsCreateOpen(true)} className="btn btn-primary mt-9">＋ 新規レポート作成</button>
             </div>
             <TodayWidget today={today} />
           </div>
         </section>
-        <div className="mb-5 flex items-end justify-between"><div><p className="font-outfit text-xs font-bold uppercase tracking-[.25em] text-rakumon-green">Recent Reports</p><h2 className="mt-2 font-outfit text-3xl font-bold">Recent Reports</h2><p className="mt-2 text-sm text-rakumon-body">週報・月報・プロジェクトレポートをここから開けます。</p></div></div>
+        <section className="mb-8 grid gap-5 md:grid-cols-3">
+          {[['Weekly Report','週次運営報告','Open weekly reports'],['Monthly Report','月次経営・運営報告','/work/rakumon/report/monthly'],['Program Report','プログラム別レポート','Coming Soon']].map(([title,sub,meta]) => <article key={title} className="rounded-[22px] border border-white bg-white p-6 shadow-premium"><p className="font-outfit text-xl font-bold">{title}</p><p className="mt-2 font-bold text-rakumon-green">{sub}</p><p className="mt-4 text-sm text-rakumon-caption">{meta}</p>{title==='Monthly Report' && <button onClick={() => { const r=createMonthlyReport(); persistMonthly([r,...monthlyReports]); setActiveMonthly(r.id); }} className="btn btn-primary mt-5">月次を作成</button>}</article>)}
+        </section>
+        <div className="mb-5 flex items-end justify-between"><div><p className="font-outfit text-xs font-bold uppercase tracking-[.25em] text-rakumon-green">Recent Reports</p><h2 className="mt-2 font-outfit text-3xl font-bold">Recent Reports</h2><p className="mt-2 text-sm text-rakumon-body">週報・月報・プログラムレポートをここから開けます。</p></div></div>
         {reports.length === 0 ? <div className="rounded-[20px] bg-white p-10 text-center shadow-premium"><h3 className="text-xl font-bold">まだレポートがありません</h3><p className="mt-2 text-rakumon-body">新規レポートを作成して開始しましょう</p></div> : <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">{reports.map((r) => <article key={r.id} className="rounded-[20px] bg-white p-6 shadow-premium transition duration-200 hover:-translate-y-1 hover:shadow-premiumHover"><div className="flex items-center justify-between gap-3"><div className="text-sm text-rakumon-caption">対象期間</div><span className="rounded-full bg-rakumon-light px-3 py-1 text-xs font-bold text-rakumon-green">{reportTypeLabels[r.type]}</span></div><div className="mt-1 font-number text-xl font-bold text-rakumon-text">{r.startDate} / {r.endDate}</div><span className={`mt-5 inline-flex rounded-full px-3 py-1 text-xs font-bold ${r.status === 'Completed' ? 'bg-rakumon-light text-rakumon-green' : 'bg-amber-50 text-amber-700'}`}>{r.status}</span><p className="mt-5 text-sm text-rakumon-body">Last updated<br /><span className="font-number text-rakumon-caption">{new Date(r.updatedAt).toLocaleString('ja-JP')}</span></p><p className="mt-3 text-xs text-rakumon-caption">作成者: {r.author} / v{r.version}{r.isShared ? ' / 共有中' : ''}</p><div className="mt-6 flex gap-2"><button onClick={() => setActive(r.id)} className="btn btn-primary flex-1">Open</button><button onClick={() => del(r.id)} className="btn btn-danger">Delete</button></div></article>)}</div>}
+
+        <div className="mt-10 mb-5"><p className="font-outfit text-xs font-bold uppercase tracking-[.25em] text-rakumon-green">Monthly Reports</p><h2 className="mt-2 font-outfit text-3xl font-bold">Saved Monthly Reports</h2></div>
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">{monthlyReports.map((r) => <article key={r.id} className="rounded-[20px] bg-white p-6 shadow-premium"><span className="rounded-full bg-rakumon-light px-3 py-1 text-xs font-bold text-rakumon-green">Monthly Report</span><div className="mt-4 font-number text-xl font-bold text-rakumon-text">{r.reportYear}年{r.reportMonth}月</div><span className={`mt-5 inline-flex rounded-full px-3 py-1 text-xs font-bold ${r.status === 'completed' ? 'bg-rakumon-light text-rakumon-green' : 'bg-amber-50 text-amber-700'}`}>{r.status === 'completed' ? 'Completed' : 'Draft'}</span><p className="mt-5 text-sm text-rakumon-body">最終更新<br /><span className="font-number text-rakumon-caption">{new Date(r.updatedAt).toLocaleString('ja-JP')}</span></p><div className="mt-6 flex gap-2"><button onClick={() => setActiveMonthly(r.id)} className="btn btn-primary flex-1">Open</button><button onClick={() => delMonthly(r.id)} className="btn btn-danger">Delete</button></div></article>)}</div>
       </div>
     </main>
   );
